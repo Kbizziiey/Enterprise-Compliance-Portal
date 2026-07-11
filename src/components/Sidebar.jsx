@@ -7,23 +7,19 @@ import {
   ClipboardCheck,
   Users,
   Settings,
-  X,
-  ShieldCheck
+  X
 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext.jsx'
 import { useBranding } from '../context/BrandingContext.jsx'
 import RoleGuard from './RoleGuard.jsx'
+import logoIconDark from '../assets/icon-dark.svg'
 
 const linkClass = ({ isActive }) =>
   `flex items-center gap-3 rounded-xl2 px-3.5 py-2.5 text-sm font-medium transition-colors duration-250 ${
     isActive ? 'bg-sidebar-active text-white' : 'text-slate-300 hover:bg-sidebar-hover hover:text-white'
   }`
 
-/**
- * Renders as a persistent rail on large screens and an off-canvas drawer
- * (with backdrop) on mobile/tablet, controlled by `open`/`onClose` from the
- * parent layout's hamburger toggle in TopNav.
- */
+
 export default function Sidebar({ open, onClose }) {
   const { user, logout } = useAuth()
   const { branding } = useBranding()
@@ -45,9 +41,13 @@ export default function Sidebar({ open, onClose }) {
       >
         <div className="flex items-center justify-between px-5 py-5">
           <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl2 bg-primary">
-              <ShieldCheck size={18} />
-            </div>
+            {/*
+              CHANGED: replaced the generic lucide ShieldCheck placeholder
+              with the real brand mark. The sidebar's background is always
+              dark navy regardless of the app's light/dark theme toggle, so
+              it always uses the dark-background icon variant.
+            */}
+            <img src={logoIconDark} alt="" className="h-9 w-9 shrink-0" />
             <span
               className="text-base font-semibold"
               style={{ color: branding.color !== '#2563EB' ? branding.color : undefined }}
