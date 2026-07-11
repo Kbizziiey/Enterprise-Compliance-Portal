@@ -1,13 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ShieldCheck, AlertCircle } from 'lucide-react'
+import { AlertCircle } from 'lucide-react'
 import { useAuth } from '../context/AuthContext.jsx'
+import { useTheme } from '../context/ThemeContext.jsx'
+import logoHorizontalLight from '../assets/logo-horizontal-light.svg'
+import logoHorizontalDark from '../assets/logo-horizontal-dark.svg'
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID
 
 export default function LoginPage() {
   const buttonRef = useRef(null)
   const { login, user } = useAuth()
+  const { theme } = useTheme()
   const navigate = useNavigate()
   const [error, setError] = useState(null)
 
@@ -56,13 +60,18 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-canvas px-4 dark:bg-slate-900">
       <div className="card w-full max-w-sm px-8 py-10 text-center">
-        <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-xl2 bg-primary-soft text-primary dark:bg-primary/10">
-          <ShieldCheck size={26} />
-        </div>
+        {/*
+          CHANGED: replaced the generic lucide ShieldCheck icon-in-a-box
+          placeholder with the real horizontal brand lockup, swapped based
+          on the current theme so it stays legible against the card's
+          background in both light and dark mode.
+        */}
+        <img
+          src={theme === 'dark' ? logoHorizontalDark : logoHorizontalLight}
+          alt="Enterprise Compliance Portal"
+          className="mx-auto mb-8 h-16"
+        />
 
-        <h1 className="text-cardTitle mb-2 text-ink dark:text-white">
-          Enterprise Compliance Portal
-        </h1>
         <p className="mb-8 text-sm leading-relaxed text-muted">
           Sign in with your organization's Google account to view and manage
           OHS compliance records for your region.
