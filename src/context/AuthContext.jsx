@@ -51,6 +51,7 @@ export function AuthProvider({ children }) {
 
   const logout = useCallback(() => {
     localStorage.removeItem('ecp_id_token')
+    sessionStorage.removeItem('ecp_expiry_toast_shown')
     setUser(DEV_MODE ? MOCK_USER : null) // dev mode: logout is a no-op, always "signed in"
   }, [])
 
